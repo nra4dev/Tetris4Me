@@ -15,6 +15,10 @@ public class LPiece extends Piece3x3 {
 		pattern[1][1] = lSquare;
 		pattern[1][2] = lSquare;
 		pattern[2][0] = lSquare;
+		patternNum[1][0] = 2;
+		patternNum[1][1] = 5;
+		patternNum[1][2] = 2;
+		patternNum[2][0] = 1;
 		reDraw();
 	}
 
@@ -25,6 +29,10 @@ public class LPiece extends Piece3x3 {
 		pattern[1][1] = lSquare;
 		pattern[1][2] = lSquare;
 		pattern[2][0] = lSquare;
+		patternNum[1][0] = 2;
+		patternNum[1][1] = 5;
+		patternNum[1][2] = 2;
+		patternNum[2][0] = 1;
 		reDraw();
 	}
 

@@ -18,7 +18,8 @@ public class Square {
 	public static final int type_green = 5;
 	public static final int type_magenta = 6;
 	public static final int type_cyan = 7;
-	
+
+	private int num;
 	private int type;
 	private Paint paintTxt;
 	private Paint paint;
@@ -29,7 +30,7 @@ public class Square {
 	//private Context context;
 	private int squaresize;
 	private int phantomAlpha;
-	
+
 	public Square(int type, Context c) {
 		this.type = type;
 		paint = new Paint();
@@ -66,11 +67,11 @@ public class Square {
 				break;
 		}
 	}
-	
+
 	public void reDraw(int ss) {
 		if(type == type_empty)
 			return;
-		
+
 		squaresize = ss;
 		bm = Bitmap.createBitmap(ss, ss, Bitmap.Config.ARGB_8888);
 		phantomBM = Bitmap.createBitmap(ss, ss, Bitmap.Config.ARGB_8888);
@@ -85,25 +86,33 @@ public class Square {
 		phantomCanv.drawText("2", 0, 0, paintTxt);
 
 	}
-	
+
 	public Square clone(Context c) {
 		return new Square(type, c);
 	}
-	
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 	public boolean isEmpty() {
 		if(type == type_empty)
 			return true;
-		else 
+		else
 			return false;
 	}
 
 	public void draw(int x, int y, int squareSize, Canvas c, boolean isPhantom) { // top left corner of square
 		if(type == type_empty)
 			return;
-		
+
 		if(squareSize != squaresize)
 			reDraw(squareSize);
-		
+
 		if(isPhantom) {
 			c.drawBitmap(phantomBM, x, y, null);
 		} else {

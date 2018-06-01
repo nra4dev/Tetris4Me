@@ -15,6 +15,10 @@ public class JPiece extends Piece3x3 {
 		pattern[1][1] = jSquare;
 		pattern[1][2] = jSquare;
 		pattern[2][2] = jSquare;
+		patternNum[1][0] = 1;
+		patternNum[1][1] = 2;
+		patternNum[1][2] = 3;
+		patternNum[2][2] = 2;
 		reDraw();
 	}
 
@@ -25,6 +29,10 @@ public class JPiece extends Piece3x3 {
 		pattern[1][1] = jSquare;
 		pattern[1][2] = jSquare;
 		pattern[2][2] = jSquare;
+		patternNum[1][0] = 1;
+		patternNum[1][1] = 2;
+		patternNum[1][2] = 3;
+		patternNum[2][2] = 2;
 		reDraw();
 	}
 

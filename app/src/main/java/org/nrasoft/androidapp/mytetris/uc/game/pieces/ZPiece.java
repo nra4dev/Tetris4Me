@@ -15,6 +15,11 @@ public class ZPiece extends Piece3x3 {
 		pattern[1][1] = zSquare;
 		pattern[2][1] = zSquare;
 		pattern[2][2] = zSquare;
+		patternNum[1][0] = 1;
+		patternNum[1][1] = 1;
+		patternNum[2][1] = 1;
+		patternNum[2][2] = 1;
+
 		reDraw();
 	}
 
@@ -25,6 +30,12 @@ public class ZPiece extends Piece3x3 {
 		pattern[1][1] = zSquare;
 		pattern[2][1] = zSquare;
 		pattern[2][2] = zSquare;
+
+		patternNum[1][0] = 1;
+		patternNum[1][1] = 1;
+		patternNum[2][1] = 1;
+		patternNum[2][2] = 1;
+
 		reDraw();
 	}
 

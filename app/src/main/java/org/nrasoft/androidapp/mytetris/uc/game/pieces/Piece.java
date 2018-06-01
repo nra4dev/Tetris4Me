@@ -23,6 +23,9 @@ public abstract class Piece {
 	protected int y; // pattern position
 	protected int dim;    // maximum dimensions for square matrix, so all rotations fit inside!
 	protected int squareSize;
+	protected int patternNum[][];
+	protected int rotatedNum[][];
+
 	protected Square pattern[][]; 	// square matrix
 	protected Square rotated[][]; 	// square matrix
 	private Square emptySquare;
@@ -34,8 +37,6 @@ public abstract class Piece {
 	
 	/**
 	 * Always call super(); first.
-	 * @param width
-	 * @param height
 	 */
 	protected Piece(Context c, int dimension) {
 		this.dim = dimension;
@@ -49,10 +50,14 @@ public abstract class Piece {
 		
 		pattern = new Square[dim][dim]; // empty piece
 		rotated = new Square[dim][dim];
+		patternNum = new int[dim][dim];
+		rotatedNum = new int[dim][dim];
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
 				pattern[i][j] = emptySquare;
 				rotated[i][j] = emptySquare;
+				patternNum[i][j] = emptySquare.getNum();
+				rotatedNum[i][j] = emptySquare.getNum();
 			}
 		}
 	}
@@ -64,6 +69,7 @@ public abstract class Piece {
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
 				pattern[i][j] = emptySquare;
+				patternNum[i][j] = emptySquare.getNum();
 			}
 		}
 	}

@@ -15,6 +15,10 @@ public class OPiece extends Piece4x4 {
 		pattern[1][2] = oSquare;
 		pattern[2][1] = oSquare;
 		pattern[2][2] = oSquare;
+		patternNum[1][1] = 2;
+		patternNum[1][2] = 2;
+		patternNum[2][1] = 1;
+		patternNum[2][2] = 3;
 		reDraw();
 	}
 
@@ -25,6 +29,10 @@ public class OPiece extends Piece4x4 {
 		pattern[1][2] = oSquare;
 		pattern[2][1] = oSquare;
 		pattern[2][2] = oSquare;
+		patternNum[1][1] = 2;
+		patternNum[1][2] = 2;
+		patternNum[2][1] = 1;
+		patternNum[2][2] = 3;
 		reDraw();
 	}
 

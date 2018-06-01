@@ -15,6 +15,10 @@ public class SPiece extends Piece3x3 {
 		pattern[1][2] = sSquare;
 		pattern[2][0] = sSquare;
 		pattern[2][1] = sSquare;
+		patternNum[1][1] = 1;
+		patternNum[1][2] = 1;
+		patternNum[2][0] = 2;
+		patternNum[2][1] = 3;
 		reDraw();
 	}
 
@@ -25,6 +29,10 @@ public class SPiece extends Piece3x3 {
 		pattern[1][2] = sSquare;
 		pattern[2][0] = sSquare;
 		pattern[2][1] = sSquare;
+		patternNum[1][1] = 1;
+		patternNum[1][2] = 1;
+		patternNum[2][0] = 2;
+		patternNum[2][1] = 3;
 		reDraw();
 	}
 

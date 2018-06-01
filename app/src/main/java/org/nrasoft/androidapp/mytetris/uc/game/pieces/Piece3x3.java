@@ -26,6 +26,8 @@ public abstract class Piece3x3 extends Piece {
 		int rightOffset = 0;
 		int bottomOffset = 0;
 		Square backup[][] = pattern;
+		int backupNum[][] = patternNum;
+
 		// [0][0] ... [0][2]
 		//  ....       ....
 		// [2][0] ... [2][2]
@@ -40,6 +42,19 @@ public abstract class Piece3x3 extends Piece {
 		rotated[2][0] = pattern[0][0];
 		rotated[2][1] = pattern[1][0];
 		rotated[2][2] = pattern[2][0];
+
+		rotatedNum[0][0] = patternNum[0][2];
+		rotatedNum[0][1] = patternNum[1][2];
+		rotatedNum[0][2] = patternNum[2][2];
+
+		rotatedNum[1][0] = patternNum[0][1];
+		rotatedNum[1][1] = patternNum[1][1]; //center stays identical
+		rotatedNum[1][2] = patternNum[2][1];
+
+		rotatedNum[2][0] = patternNum[0][0];
+		rotatedNum[2][1] = patternNum[1][0];
+		rotatedNum[2][2] = patternNum[2][0];
+
 		// check for border violations and collisions
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
@@ -64,9 +79,11 @@ public abstract class Piece3x3 extends Piece {
 		}
 		
 		backup = pattern;
+		backupNum = patternNum;
 		pattern = rotated;
+		patternNum = rotatedNum;
 		rotated = backup;
-		
+		rotatedNum = backupNum;
 		// try to correct border violations
 		if(maxBottomOffset < 1) {
 			if(maxLeftOffset < 1)  {
@@ -79,7 +96,9 @@ public abstract class Piece3x3 extends Piece {
 						return true;
 					} else {
 						rotated = pattern;
+						rotatedNum = patternNum;
 						pattern = backup;
+						patternNum = backupNum;
 						return false;
 					}
 				}
@@ -89,7 +108,9 @@ public abstract class Piece3x3 extends Piece {
 					return true;
 				} else {
 					rotated = pattern;
+					rotatedNum = patternNum;
 					pattern = backup;
+					patternNum = backupNum;
 					return false;
 				}
 			}
@@ -99,7 +120,9 @@ public abstract class Piece3x3 extends Piece {
 				return true;
 			} else {
 				rotated = pattern;
+				rotatedNum = patternNum;
 				pattern = backup;
+				patternNum = backupNum;
 				return false;
 			}
 		}

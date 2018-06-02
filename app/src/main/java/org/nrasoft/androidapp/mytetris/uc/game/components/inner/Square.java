@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 import org.nrasoft.androidapp.R;
 
@@ -21,8 +22,9 @@ public class Square {
 
 	private int num;
 	private int type;
-	private Paint paintTxt;
-	private Paint paint;
+	private Paint textPaint;
+	private Paint circlePaint;
+	private Paint rectPaint;
 	private Bitmap bm;
 	private Bitmap phantomBM;
 	private Canvas canv;
@@ -33,37 +35,41 @@ public class Square {
 
 	public Square(int type, Context c) {
 		this.type = type;
-		paint = new Paint();
-		paintTxt = new Paint();
-		paintTxt.setColor(Color.BLACK);
+		rectPaint = new Paint();
+		circlePaint = new Paint();
+		circlePaint.setColor(Color.BLACK);
+		circlePaint.setTextAlign(Paint.Align.CENTER);
+		textPaint = new Paint();
+		textPaint.setColor(Color.WHITE);
+		textPaint.setTextAlign(Paint.Align.CENTER);
 		phantomAlpha = c.getResources().getInteger(R.integer.phantom_alpha);
 		squaresize = 0;
 		switch(type){
 			case type_blue:
-				paint.setColor(c.getResources().getColor(R.color.square_blue));
+				rectPaint.setColor(c.getResources().getColor(R.color.square_blue));
 				break;
 			case type_orange:
-				paint.setColor(c.getResources().getColor(R.color.square_orange));
+				rectPaint.setColor(c.getResources().getColor(R.color.square_orange));
 				break;
 			case type_yellow:
-				paint.setColor(c.getResources().getColor(R.color.square_yellow));
+				rectPaint.setColor(c.getResources().getColor(R.color.square_yellow));
 				break;
 			case type_red:
-				paint.setColor(c.getResources().getColor(R.color.square_red));
+				rectPaint.setColor(c.getResources().getColor(R.color.square_red));
 				break;
 			case type_green:
-				paint.setColor(c.getResources().getColor(R.color.square_green));
+				rectPaint.setColor(c.getResources().getColor(R.color.square_green));
 				break;
 			case type_magenta:
-				paint.setColor(c.getResources().getColor(R.color.square_magenta));
+				rectPaint.setColor(c.getResources().getColor(R.color.square_magenta));
 				break;
 			case type_cyan:
-				paint.setColor(c.getResources().getColor(R.color.square_cyan));
+				rectPaint.setColor(c.getResources().getColor(R.color.square_cyan));
 				break;
 			case type_empty:
 				return;
 			default: // error: white
-				paint.setColor(c.getResources().getColor(R.color.square_error));
+				rectPaint.setColor(c.getResources().getColor(R.color.square_error));
 				break;
 		}
 	}
@@ -73,17 +79,20 @@ public class Square {
 			return;
 
 		squaresize = ss;
+		textPaint.setTextSize(ss/2);
 		bm = Bitmap.createBitmap(ss, ss, Bitmap.Config.ARGB_8888);
 		phantomBM = Bitmap.createBitmap(ss, ss, Bitmap.Config.ARGB_8888);
 		canv = new Canvas(bm);
 		phantomCanv = new Canvas(phantomBM);
 
-		paint.setAlpha(255);
-		canv.drawRect(0, 0, squaresize, squaresize, paint);
-		canv.drawText("2", 0, 0, paintTxt);
-		paint.setAlpha(phantomAlpha);
-		phantomCanv.drawRect(0, 0, squaresize, squaresize, paint);
-		phantomCanv.drawText("2", 0, 0, paintTxt);
+		rectPaint.setAlpha(255);
+		canv.drawRect(0, 0, squaresize, squaresize, rectPaint);
+		canv.drawCircle(squaresize/2, squaresize/2, squaresize/2, circlePaint);
+		canv.drawText("5", squaresize/2, squaresize/2, textPaint);
+
+
+		rectPaint.setAlpha(phantomAlpha);
+		phantomCanv.drawRect(0, 0, squaresize, squaresize, rectPaint);
 
 	}
 
@@ -118,5 +127,38 @@ public class Square {
 		} else {
 			c.drawBitmap(bm, x, y, null);
 		}
+	}
+
+	private float calculateFontSize(Rect textBounds, Rect textContainer, String text, Paint textPaint) {
+		int stage = 1;
+		float textSize = 0;
+
+		while(stage < 3) {
+			if (stage == 1) textSize += 10;
+			else
+			if (stage == 2) textSize -= 1;
+
+			textPaint.setTextSize(textSize);
+			textPaint.getTextBounds(text, 0, text.length(), textBounds);
+
+			textBounds.offsetTo(textContainer.left, textContainer.top);
+
+			boolean fits = textContainer.contains(textBounds);
+			if (stage == 1 && !fits) stage++;
+			else
+			if (stage == 2 &&  fits) stage++;
+		}
+
+		return textSize;
+	}
+
+	private void drawRectText(String text, Paint textPaint, Canvas canvas, Rect r) {
+
+		textPaint.setTextSize(20);
+		textPaint.setTextAlign(Paint.Align.CENTER);
+		int width = r.width();
+		int numOfChars = textPaint.breakText(text,true,width,null);
+		int start = (text.length()-numOfChars)/2;
+		canvas.drawText(text,start,start+numOfChars,r.exactCenterX(),r.exactCenterY(),textPaint);
 	}
 }

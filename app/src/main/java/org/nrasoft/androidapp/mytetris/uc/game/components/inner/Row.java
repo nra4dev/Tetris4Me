@@ -5,11 +5,13 @@ import org.nrasoft.androidapp.mytetris.uc.game.components.Board;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 public class Row {
 
 	private Row below; // positive x direction
 	private Row above; // negative x direction
+	private int[] nums;
 	private Square[] elements;
 	private Square emptySquare;
 	private int colCount;
@@ -24,6 +26,7 @@ public class Row {
 		above = null;
 		fillStatus = 0;
 		elements = new Square[colCount];
+		nums = new int[colCount];
 		for(int i = 0; i < colCount; i++) {
 			elements[i] = emptySquare;
 		}
@@ -87,15 +90,18 @@ public class Row {
 	}
 
 	public void draw(int x, int y, int squareSize, Canvas c) { // top left corner of Row
+		Log.v("NRA", "Row.draw(x, y, squareSize) -> " + x + ", " + y + ", " + squareSize);
 		animator.draw(x, y, squareSize, c);
 	}
 
 	public Bitmap drawBitmap(int squareSize) { // top left corner of Row
+		Log.v("NRA", "Row.drawBitmap(squareSize) -> " + squareSize);
+
 		Bitmap bm = Bitmap.createBitmap(colCount *squareSize, squareSize, Bitmap.Config.ARGB_8888);
 		Canvas tamp = new Canvas(bm);
 		for(int i = 0; i < colCount; i++) {
 			if(elements[i] != null)
-				elements[i].draw(i*squareSize,0,squareSize,tamp,false);
+				elements[i].draw(i*squareSize,0,squareSize,tamp,false, 0);
 		}
 		return bm;
 	}

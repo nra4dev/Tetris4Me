@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "org.mrasoft.mytetris"
+        applicationId "org.nrasoft.mytetris"
         minSdkVersion 14
         targetSdkVersion 19
     }

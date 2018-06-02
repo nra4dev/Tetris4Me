@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.media.AudioManager;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.nrasoft.androidapp.R;
 import org.nrasoft.androidapp.mytetris.uc.game.GameActivity;
@@ -102,6 +103,7 @@ public class Controls extends Component {
 	}
 
 	public void vibrateBottom() {
+		Log.d("NRA", "Controls.vibrateBottom()");
 		if (v == null)
 			return;
 		if (!eventVibrationEnabled)
@@ -321,6 +323,9 @@ public class Controls extends Component {
 			continuousSoftDrop = true;
 			if(!active.drop(board)) {
 				// piece finished
+				Log.d("NRA", "Initial Soft Drop / piece finished");
+				Log.d("NRA", "active.x" + active.getX());
+				Log.d("NRA", "active.y" + active.getY());
 				vibrateBottom();
 				host.state.clearLines(false, 0);
 				host.state.pieceTransition(eventVibrationEnabled);
@@ -339,6 +344,9 @@ public class Controls extends Component {
 			if(gameTime >= host.state.getNextPlayerDropTime()) {
 				if(!active.drop(board)) {
 					// piece finished
+					Log.d("NRA", "Continuous Soft Drop / piece finished");
+					Log.d("NRA", "active.x=" + active.getX());
+					Log.d("NRA", "active.y=" + active.getY());
 					vibrateBottom();
 					host.state.clearLines(false, 0);
 					host.state.pieceTransition(eventVibrationEnabled);
@@ -356,6 +364,10 @@ public class Controls extends Component {
 			} else if(gameTime >= host.state.getNextDropTime()) {
 				if(!active.drop(board)) {
 					// piece finished
+					Log.d("NRA", "Autodrop if faster than playerDrop / piece finished");
+					Log.d("NRA", "active.x=" + active.getX());
+					Log.d("NRA", "active.y=" + active.getY());
+					host.state.showNums();
 					vibrateBottom();
 					host.state.clearLines(false, 0);
 					host.state.pieceTransition(eventVibrationEnabled);
@@ -378,6 +390,10 @@ public class Controls extends Component {
 		} else if(gameTime >= host.state.getNextDropTime()) {
 			if(!active.drop(board)) {
 				// piece finished
+				Log.d("NRA", "Autodrop if no playerDrop / piece finished");
+				Log.d("NRA", "active.x=" + active.getX());
+				Log.d("NRA", "active.y=" + active.getY());
+				host.state.showNums();
 				vibrateBottom();
 				host.state.clearLines(false, 0);
 				host.state.pieceTransition(eventVibrationEnabled);

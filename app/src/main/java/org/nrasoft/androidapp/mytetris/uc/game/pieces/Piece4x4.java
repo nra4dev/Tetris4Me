@@ -26,6 +26,7 @@ public abstract class Piece4x4 extends Piece {
 		int rightOffset = 0;
 		int bottomOffset = 0;
 		Square backup[][] = pattern;
+		int backupNum[][] = patternNum;
 		// [0][0] ... [0][3]
 		//  ....       ....
 		// [3][0] ... [3][3]
@@ -48,6 +49,27 @@ public abstract class Piece4x4 extends Piece {
 		rotated[1][2] = pattern[2][2];
 		rotated[2][2] = pattern[2][1];
 		rotated[2][1] = pattern[1][1];
+
+		rotatedNum[0][3] = patternNum[3][3];
+		rotatedNum[3][3] = patternNum[3][0];
+		rotatedNum[3][0] = patternNum[0][0];
+
+		rotatedNum[0][1] = patternNum[1][3];
+		rotatedNum[1][3] = patternNum[3][2];
+		rotatedNum[3][2] = patternNum[2][0];
+		rotatedNum[2][0] = patternNum[0][1];
+
+		rotatedNum[0][2] = patternNum[2][3];
+		rotatedNum[2][3] = patternNum[3][1];
+		rotatedNum[3][1] = patternNum[1][0];
+		rotatedNum[1][0] = patternNum[0][2];
+
+		rotatedNum[1][1] = patternNum[1][2];
+		rotatedNum[1][2] = patternNum[2][2];
+		rotatedNum[2][2] = patternNum[2][1];
+		rotatedNum[2][1] = patternNum[1][1];
+
+
 		// check for border violations and collisions
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {
@@ -72,9 +94,13 @@ public abstract class Piece4x4 extends Piece {
 		}
 		
 		backup = pattern;
+		backupNum = patternNum;
+
 		pattern = rotated;
+		patternNum = rotatedNum;
+
 		rotated = backup;
-		
+		rotatedNum = backupNum;
 		// try to correct border violations
 		if(maxBottomOffset < 1) {
 			if(maxLeftOffset < 1)  {
@@ -87,7 +113,9 @@ public abstract class Piece4x4 extends Piece {
 						return true;
 					} else {
 						rotated = pattern;
+						rotatedNum = patternNum;
 						pattern = backup;
+						patternNum = backupNum;
 						return false;
 					}
 				}
@@ -97,7 +125,9 @@ public abstract class Piece4x4 extends Piece {
 					return true;
 				} else {
 					rotated = pattern;
+					rotatedNum = patternNum;
 					pattern = backup;
+					patternNum = backupNum;
 					return false;
 				}
 			}
@@ -107,7 +137,9 @@ public abstract class Piece4x4 extends Piece {
 				return true;
 			} else {
 				rotated = pattern;
+				rotatedNum = patternNum;
 				pattern = backup;
+				patternNum = backupNum;
 				return false;
 			}
 		}
@@ -125,6 +157,7 @@ public abstract class Piece4x4 extends Piece {
 		int rightOffset = 0;
 		int bottomOffset = 0;
 		Square backup[][] = pattern;
+		int backupNum[][] = patternNum;
 		// [0][0] ... [0][3]
 		//  ....       ....
 		// [3][0] ... [3][3]
@@ -148,6 +181,27 @@ public abstract class Piece4x4 extends Piece {
 		rotated[2][1] = pattern[2][2];
 		rotated[1][1] = pattern[2][1];
 
+		rotatedNum[0][3] = patternNum[0][0];
+		rotatedNum[3][3] = patternNum[0][3];
+		rotatedNum[3][0] = patternNum[3][3];
+		rotatedNum[0][0] = patternNum[3][0];
+
+		rotatedNum[1][3] = patternNum[0][1];
+		rotatedNum[3][2] = patternNum[1][3];
+		rotatedNum[2][0] = patternNum[3][2];
+		rotatedNum[0][1] = patternNum[2][0];
+
+		rotatedNum[2][3] = patternNum[0][2];
+		rotatedNum[3][1] = patternNum[2][3];
+		rotatedNum[1][0] = patternNum[3][1];
+		rotatedNum[0][2] = patternNum[1][0];
+
+		rotatedNum[1][2] = patternNum[1][1];
+		rotatedNum[2][2] = patternNum[1][2];
+		rotatedNum[2][1] = patternNum[2][2];
+		rotatedNum[1][1] = patternNum[2][1];
+
+
 		// check for border violations and collisions
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {
@@ -170,10 +224,16 @@ public abstract class Piece4x4 extends Piece {
 				}
 			}
 		}
-		
+
 		backup = pattern;
+		backupNum = patternNum;
+
 		pattern = rotated;
+		patternNum = rotatedNum;
+
 		rotated = backup;
+		rotatedNum = backupNum;
+		// try to correct border violations
 		
 		// try to correct border violations
 		if(maxBottomOffset < 1) {
@@ -187,7 +247,9 @@ public abstract class Piece4x4 extends Piece {
 						return true;
 					} else {
 						rotated = pattern;
+						rotatedNum = patternNum;
 						pattern = backup;
+						patternNum = backupNum;
 						return false;
 					}
 				}
@@ -197,7 +259,9 @@ public abstract class Piece4x4 extends Piece {
 					return true;
 				} else {
 					rotated = pattern;
+					rotatedNum = patternNum;
 					pattern = backup;
+					patternNum = backupNum;
 					return false;
 				}
 			}
@@ -207,7 +271,9 @@ public abstract class Piece4x4 extends Piece {
 				return true;
 			} else {
 				rotated = pattern;
+				rotatedNum = patternNum;
 				pattern = backup;
+				patternNum = backupNum;
 				return false;
 			}
 		}

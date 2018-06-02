@@ -11,6 +11,7 @@ import org.nrasoft.androidapp.mytetris.uc.game.GameActivity;
 
 import android.R.color;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 
 public class State extends Component {
@@ -144,8 +145,6 @@ public class State extends Component {
 		previewIndex = rng.next();
 		activePieces[activeIndex].setActive(true);
 
-		//paused = true;
-		//restartMe = false;
 		stateOfTheGame = state_startable;
 		scheduleSpawn = false;
 		spawnTime = 0;
@@ -271,15 +270,21 @@ public class State extends Component {
 		
 		
 	}
-	
+
+	public void showNums() {
+		Log.d("NRA", "showNums():... " );
+		Log.d("NRA", board.getNumsAsString());
+	}
+
 	public void finishTransition() {
+		Log.d("NRA", "State.finishTransition()");
 		if(host == null)
 			return;
 		
 		scheduleSpawn = false;
 		host.display.invalidatePhantom();
 		activePieces[activeIndex].setActive(true);
-		setNextDropTime(gameTime +  dropIntervals[Math.min(level,maxLevel)]);
+		setNextDropTime(gameTime + dropIntervals[Math.min(level,maxLevel)]);
 		setNextPlayerDropTime(gameTime);
 		setNextPlayerMoveTime(gameTime);
 		softDropDistance = 0;

@@ -7,6 +7,7 @@ import org.nrasoft.androidapp.mytetris.uc.game.components.Board;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 public abstract class Piece {
 
@@ -56,8 +57,6 @@ public abstract class Piece {
 			for(int j = 0; j < dim; j++) {
 				pattern[i][j] = emptySquare;
 				rotated[i][j] = emptySquare;
-				patternNum[i][j] = emptySquare.getNum();
-				rotatedNum[i][j] = emptySquare.getNum();
 			}
 		}
 	}
@@ -69,7 +68,6 @@ public abstract class Piece {
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
 				pattern[i][j] = emptySquare;
-				patternNum[i][j] = emptySquare.getNum();
 			}
 		}
 	}
@@ -82,13 +80,17 @@ public abstract class Piece {
 	public boolean isActive() {
 		return active;
 	}
-	
+
+	public int[][] getPatternNum() {
+		return patternNum;
+	}
+
 	public void place(Board board) {
 		active = false;
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
 				if(pattern[i][j] != null)
-					board.set(x+j,y+i,pattern[i][j]);
+					board.set(x+j,y+i,pattern[i][j], patternNum[i][j]);
 			}
 		}
 	}
@@ -98,6 +100,7 @@ public abstract class Piece {
 	 * @return true if movement was successfull.
 	 */
 	public boolean setPosition(int x_new, int y_new, boolean noInterrupt, Board board) {
+		Log.d("NRA", "Piece.setPosition(x_new, y_new, noInterrupt) -> " + x_new + ","  + y_new + "," + noInterrupt);
 		boolean collision = false;
 		int leftOffset = 0;
 		int rightOffset = 0;
@@ -185,14 +188,15 @@ public abstract class Piece {
 	}
 	
 	protected void reDraw() {
-		
+		Log.v("NRA", "Piece.reDraw()");
 		bm = Bitmap.createBitmap(squareSize*dim, squareSize*dim, Bitmap.Config.ARGB_8888);
 		cv = new Canvas(bm);
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
 				if(pattern[i][j] == null) {} else
-					if(!pattern[i][j].isEmpty())
-						pattern[i][j].draw(j*squareSize, i*squareSize, squareSize, cv, false);
+					if(!pattern[i][j].isEmpty()) {
+						pattern[i][j].draw(j*squareSize, i*squareSize, squareSize, cv, false, patternNum[i][j]);
+					}
 			}
 		}
 
@@ -202,7 +206,7 @@ public abstract class Piece {
 			for(int j = 0; j < dim; j++) {
 				if(pattern[i][j] == null) {} else
 					if(!pattern[i][j].isEmpty())
-						pattern[i][j].draw(j*squareSize, i*squareSize, squareSize, cvPhantom, true);
+						pattern[i][j].draw(j*squareSize, i*squareSize, squareSize, cvPhantom, true, patternNum[i][j]);
 			}
 		}
 	}
@@ -215,12 +219,16 @@ public abstract class Piece {
 	 * @param c canvas
 	 */
 	public void drawOnBoard(int xOffset, int yOffset, int ss, Canvas c) {
+		Log.v("NRA", "Piece.drawOnBoard(xOffset,yOffset,ss) -> (" + xOffset + ","  + yOffset + "," + ss + ")");
+		Log.v("NRA", "Piece.active=" + active);
+		Log.v("NRA", "Piece.squareSize=" + squareSize);
 		if(!active)
 			return;
 		if(ss != squareSize) {
 			squareSize = ss;
-			reDraw();
+			//reDraw();
 		}
+		reDraw();
 		if(isPhantom)
 			c.drawBitmap(bmPhantom, x*squareSize + xOffset, y*squareSize + yOffset, null);
 		else

@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 import org.nrasoft.androidapp.R;
 
@@ -20,8 +21,8 @@ public class Square {
 	public static final int type_magenta = 6;
 	public static final int type_cyan = 7;
 
-	private int num;
 	private int type;
+
 	private Paint textPaint;
 	private Paint circlePaint;
 	private Paint rectPaint;
@@ -29,7 +30,6 @@ public class Square {
 	private Bitmap phantomBM;
 	private Canvas canv;
 	private Canvas phantomCanv;
-	//private Context context;
 	private int squaresize;
 	private int phantomAlpha;
 
@@ -74,10 +74,10 @@ public class Square {
 		}
 	}
 
-	public void reDraw(int ss) {
+	public void reDraw(int ss, int num) {
 		if(type == type_empty)
 			return;
-
+		Log.v("NRA", "Square.reDraw(ss,num) -> (" + ss + ","+ num + ")");
 		squaresize = ss;
 		textPaint.setTextSize(ss/2);
 		bm = Bitmap.createBitmap(ss, ss, Bitmap.Config.ARGB_8888);
@@ -88,9 +88,9 @@ public class Square {
 		rectPaint.setAlpha(255);
 		canv.drawRect(0, 0, squaresize, squaresize, rectPaint);
 		canv.drawCircle(squaresize/2, squaresize/2, squaresize/2, circlePaint);
-		canv.drawText("5", squaresize/2, squaresize/2, textPaint);
-
-
+		if (num >0) {
+			canv.drawText("" + num, squaresize / 2, squaresize / 2, textPaint);
+		}
 		rectPaint.setAlpha(phantomAlpha);
 		phantomCanv.drawRect(0, 0, squaresize, squaresize, rectPaint);
 
@@ -100,14 +100,6 @@ public class Square {
 		return new Square(type, c);
 	}
 
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
-	}
-
 	public boolean isEmpty() {
 		if(type == type_empty)
 			return true;
@@ -115,13 +107,14 @@ public class Square {
 			return false;
 	}
 
-	public void draw(int x, int y, int squareSize, Canvas c, boolean isPhantom) { // top left corner of square
+	public void draw(int x, int y, int squareSize, Canvas c, boolean isPhantom, int num) { // top left corner of square
+		Log.v("NRA", "Square.draw(x,y,isPhantom, num) -> (" + x + ","  + y + "," + isPhantom + "," + num+ ")");
 		if(type == type_empty)
 			return;
-
-		if(squareSize != squaresize)
-			reDraw(squareSize);
-
+		if(squareSize != squaresize) {
+			//reDraw(squareSize, num);
+		}
+		reDraw(squareSize, num);
 		if(isPhantom) {
 			c.drawBitmap(phantomBM, x, y, null);
 		} else {
@@ -129,36 +122,6 @@ public class Square {
 		}
 	}
 
-	private float calculateFontSize(Rect textBounds, Rect textContainer, String text, Paint textPaint) {
-		int stage = 1;
-		float textSize = 0;
 
-		while(stage < 3) {
-			if (stage == 1) textSize += 10;
-			else
-			if (stage == 2) textSize -= 1;
 
-			textPaint.setTextSize(textSize);
-			textPaint.getTextBounds(text, 0, text.length(), textBounds);
-
-			textBounds.offsetTo(textContainer.left, textContainer.top);
-
-			boolean fits = textContainer.contains(textBounds);
-			if (stage == 1 && !fits) stage++;
-			else
-			if (stage == 2 &&  fits) stage++;
-		}
-
-		return textSize;
-	}
-
-	private void drawRectText(String text, Paint textPaint, Canvas canvas, Rect r) {
-
-		textPaint.setTextSize(20);
-		textPaint.setTextAlign(Paint.Align.CENTER);
-		int width = r.width();
-		int numOfChars = textPaint.breakText(text,true,width,null);
-		int start = (text.length()-numOfChars)/2;
-		canvas.drawText(text,start,start+numOfChars,r.exactCenterX(),r.exactCenterY(),textPaint);
-	}
 }

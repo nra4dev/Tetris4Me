@@ -7,24 +7,27 @@ import org.nrasoft.androidapp.mytetris.uc.game.GameActivity;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 
 public class Board extends Component {
-	
+
 	private int rowCount;
 	private int colCount;
 	private Row topRow; // index 0
 	private Row currentRow;
 	private int currentIndex;
+	private int[][] nums;
 	private Row tempRow;
 	private boolean valid;
 	private Bitmap blockMap;
 	private Canvas blockVas;
-	
+
 	public Board(GameActivity ga) {
 		super(ga);
 		colCount = host.getResources().getInteger(R.integer.col_count);
 		rowCount = host.getResources().getInteger(R.integer.row_count);
+		nums = new int[rowCount][colCount];
 		valid = false;
 		
 		/* Init Board */
@@ -42,11 +45,14 @@ public class Board extends Component {
 		topRow.setAbove(currentRow);
 		currentRow.setBelow(topRow);
 	}
-	
+
 	public void draw(int x, int y, int squareSize, Canvas c){ // top left corner of state board
+		Log.v("NRA", "Board.draw(x,y,squareSize) -> " + x + ","  + y + "," + squareSize);
+		Log.v("NRA", "Board.valid=" + valid);
+
 		if(topRow == null)
-			throw new RuntimeException("BlockBoard was not initialized!");
-		
+			throw new RuntimeException("Board was not initialized!");
+
 		if(valid) {
 			c.drawBitmap(blockMap, x, y, null);
 			return;
@@ -69,7 +75,7 @@ public class Board extends Component {
 			}
 			return;
 		}
-		
+
 		blockVas = new Canvas(blockMap);
 		valid = true;
 		tempRow = topRow;
@@ -88,6 +94,26 @@ public class Board extends Component {
 
 	public int getRowCount() {
 		return rowCount;
+	}
+
+	public int[][] getNums() {
+		return nums;
+	}
+
+	public String getNumsAsString() {
+		String str = "";
+		try {
+            for (int row = 0; row < getRowCount(); row++) {
+                for (int col = 0; col < getColCount(); col++) {
+                    str += nums[row][col] + " ";
+                }
+                str += "\n";
+            }
+		}
+		catch (Exception e) {
+			Log.d("NRA", "getNumsAsString failed");
+		}
+		return str;
 	}
 
 	public Square get(int x, int y) {
@@ -120,7 +146,8 @@ public class Board extends Component {
 		}
 	}
 
-	public void set(int x, int y, Square square) {
+	public void set(int x, int y, Square square, int num) {
+		Log.d("NRA", "Board.set(x,y,square, num) -> " + x + ","  + y + "," + square + ", " + num);
 		if(x < 0)
 			return;
 		if(x > (colCount - 1))
@@ -135,17 +162,23 @@ public class Board extends Component {
 			return;
 		
 		valid = false;
-		
+		if (num > 0) {
+			try {
+				nums[y][x] = num;
+			} catch (Exception e) {
+                Log.d("NRA", "failed to set nums");
+			}
+		}
 		if(currentIndex == y)
 			currentRow.set(square,x);
 		else if(currentIndex < y) {
 			currentRow = currentRow.below();
 			currentIndex++;
-			set(x, y, square);
+			set(x, y, square, num);
 		} else {
 			currentRow = currentRow.above();
 			currentIndex--;
-			set(x, y, square);
+			set(x, y, square, num);
 		}
 	}
 
@@ -162,6 +195,7 @@ public class Board extends Component {
 				return;
 		}
 	}
+
 
 	public int clearLines(int dim) {
 		valid = false;

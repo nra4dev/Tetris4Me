@@ -69,7 +69,7 @@ public class Board extends Component {
 			tempRow = topRow;
 			for(int i = 0; i < rowCount; i++) {
 				if(tempRow != null) {
-					c.drawBitmap(tempRow.drawBitmap(squareSize), x, y+i*squareSize, null);
+					c.drawBitmap(tempRow.drawBitmap(squareSize, i, model), x, y+i*squareSize, null);
 					tempRow = tempRow.below();
 				}
 			}
@@ -81,7 +81,7 @@ public class Board extends Component {
 		tempRow = topRow;
 		for(int i = 0; i < rowCount; i++) {
 			if(tempRow != null) {
-				tempRow.draw(0,0+i*squareSize,squareSize,blockVas);
+				tempRow.draw(0,0+i*squareSize,squareSize,i, model,blockVas);
 				tempRow = tempRow.below();
 			}
 		}
@@ -131,7 +131,7 @@ public class Board extends Component {
 	}
 
 	public void set(int x, int y, Square square, int value) {
-		Log.d("NRA", "Board.set(x,y,square, value) -> " + x + ","  + y + "," + square + ", " + value);
+		Log.v("NRA", "Board.set(x,y,square, value) -> " + x + ","  + y + "," + square + ", " + value);
 		if(x < 0)
 			return;
 		if(x > (colCount - 1))

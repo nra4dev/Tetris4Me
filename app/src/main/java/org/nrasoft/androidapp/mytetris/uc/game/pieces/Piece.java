@@ -68,6 +68,7 @@ public abstract class Piece {
 		for(int i = 0; i < dim; i++) {
 			for(int j = 0; j < dim; j++) {
 				pattern[i][j] = emptySquare;
+				patternNum[i][j] = 0;
 			}
 		}
 	}
@@ -134,11 +135,10 @@ public abstract class Piece {
 		}
 		x = x_new;
 		y = y_new;
-		Log.d("NRA","after");
 		board.getModel().setActivePieceX(x);
 		board.getModel().setActivePieceY(y);
 		board.getModel().updateGridActiveValueMatrix(this);
-		Log.d("NRA", board.getModel().toString());
+		Log.v("NRA", board.getModel().toString());
 		return true;
 	}
 	
@@ -295,18 +295,27 @@ public abstract class Piece {
 		str += "x=" + x + "\n";
 		str += "y=" + y + "\n";
 		str += "dim=" + dim + "\n";
-		str += "patternNum=\n";
+		str += "patternNum\n";
+		str +=toString(patternNum);
+		str += "\n";
+		str += "rotatedNum\n";
+		str +=toString(rotatedNum);
+		str += "\n";
+		return str;
+	}
+	public String toString(int[][] matrix) {
+		String str = "";
 		try {
-			for (int i = 0; i < patternNum.length; i++) {
+			for (int i = 0; i < matrix.length; i++) {
 				str += "\t";
-				for (int j = 0; j < patternNum[i].length; j++) {
-					str += patternNum[i][j] + " ";
+				for (int j = 0; j < matrix[i].length; j++) {
+					str += matrix[i][j] + " ";
 				}
 				str += "\n";
 			}
 		}
 		catch (Exception e) {
-			Log.d("NRA", "Piece.toString() failed");
+			Log.d("NRA", "Piece.matrix(int[][] matrix) failed");
 		}
 		return str;
 	}

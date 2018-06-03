@@ -1,5 +1,6 @@
 package org.nrasoft.androidapp.mytetris.uc.game.components.inner;
 
+import org.nrasoft.androidapp.mytetris.uc.game.GameModel;
 import org.nrasoft.androidapp.mytetris.uc.game.components.Board;
 
 import android.content.Context;
@@ -11,7 +12,6 @@ public class Row {
 
 	private Row below; // positive x direction
 	private Row above; // negative x direction
-	private int[] nums;
 	private Square[] elements;
 	private Square emptySquare;
 	private int colCount;
@@ -26,7 +26,6 @@ public class Row {
 		above = null;
 		fillStatus = 0;
 		elements = new Square[colCount];
-		nums = new int[colCount];
 		for(int i = 0; i < colCount; i++) {
 			elements[i] = emptySquare;
 		}
@@ -89,19 +88,28 @@ public class Row {
 		return result;
 	}
 
-	public void draw(int x, int y, int squareSize, Canvas c) { // top left corner of Row
+	public void draw(int x, int y, int squareSize, int rowIndex, GameModel model, Canvas c) { // top left corner of Row
 		Log.v("NRA", "Row.draw(x, y, squareSize) -> " + x + ", " + y + ", " + squareSize);
-		animator.draw(x, y, squareSize, c);
+		animator.draw(x, y, squareSize, rowIndex, model, c);
 	}
 
 	public Bitmap drawBitmap(int squareSize) { // top left corner of Row
 		Log.v("NRA", "Row.drawBitmap(squareSize) -> " + squareSize);
-
 		Bitmap bm = Bitmap.createBitmap(colCount *squareSize, squareSize, Bitmap.Config.ARGB_8888);
 		Canvas tamp = new Canvas(bm);
 		for(int i = 0; i < colCount; i++) {
 			if(elements[i] != null)
 				elements[i].draw(i*squareSize,0,squareSize,tamp,false, 0);
+		}
+		return bm;
+	}
+	public Bitmap drawBitmap(int squareSize, int rowIndex, GameModel model) { // top left corner of Row
+		Log.v("NRA", "Row.drawBitmap(squareSize) -> " + squareSize);
+		Bitmap bm = Bitmap.createBitmap(colCount *squareSize, squareSize, Bitmap.Config.ARGB_8888);
+		Canvas tamp = new Canvas(bm);
+		for(int i = 0; i < colCount; i++) {
+			if(elements[i] != null)
+				elements[i].draw(i*squareSize,0,squareSize,tamp,false, model.getGridValueMatrix()[rowIndex][i]);
 		}
 		return bm;
 	}

@@ -234,9 +234,7 @@ public abstract class Piece4x4 extends Piece {
 
 		rotated = backup;
 		rotatedNum = backupNum;
-		// try to correct border violations
-		
-		// try to correct border violations
+
 		if(maxBottomOffset < 1) {
 			if(maxLeftOffset < 1)  {
 				if(maxRightOffset < 1) {

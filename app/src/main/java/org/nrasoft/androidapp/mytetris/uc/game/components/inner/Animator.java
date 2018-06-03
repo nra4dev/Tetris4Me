@@ -1,6 +1,7 @@
 package org.nrasoft.androidapp.mytetris.uc.game.components.inner;
 
 import org.nrasoft.androidapp.R;
+import org.nrasoft.androidapp.mytetris.uc.game.GameModel;
 import org.nrasoft.androidapp.mytetris.uc.game.components.Board;
 
 import android.content.Context;
@@ -80,7 +81,7 @@ public class Animator {
 		return true;
 	}
 	
-	public void draw(int x, int y, int ss, Canvas c) {
+	public void draw(int x, int y, int ss, int rowIndex, GameModel model, Canvas c) {
 		//float scaleFactor = flashFinishTime / (flashFinishTime-flashProgress);
 		//Bitmap bm = Bitmap.createBitmap(brustWidth, burstHeight, Bitmap.Config.ARGB_8888);
 		//Canvas tamp = new Canvas(bm);
@@ -88,7 +89,7 @@ public class Animator {
 		this.squareSize = ss;
 		if(drawEnable) {
 			if(stage == animationStageIdle)
-				bitmapRow = row.drawBitmap(ss);
+				bitmapRow = row.drawBitmap(ss, rowIndex, model);
 			//bitmapRow.scale(scaleFactor, scaleFactor, px, py);
 			if (bitmapRow != null)
 				c.drawBitmap(bitmapRow, x, y, null);

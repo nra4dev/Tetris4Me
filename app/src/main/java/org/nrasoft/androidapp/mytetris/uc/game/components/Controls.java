@@ -210,12 +210,19 @@ public class Controls extends Component {
 		Piece active = host.state.getActivePiece();
 		Board board = host.state.getBoard();
 		int maxLevel = host.state.getMaxLevel();
-
+		boolean actionResult;
 
 		// Left Rotation
 		if(leftRotation) {
 			leftRotation = false;
-			active.turnLeft(board);
+			Log.d("NRA", "before turnLeft");
+			Log.d("NRA", active.toString());
+			actionResult = active.turnLeft(board);
+			Log.d("NRA", "after turnLeft");
+			Log.d("NRA", active.toString());
+			if (actionResult) {
+				board.getModel().updateGridActiveValueMatrix(active);
+			}
 			host.display.invalidatePhantom();
 		}
 
@@ -223,7 +230,15 @@ public class Controls extends Component {
 		// Right Rotation
 		if(rightRotation) {
 			rightRotation = false;
-			active.turnRight(board);
+			Log.d("NRA", "before turnRight");
+			Log.d("NRA", active.toString());
+			actionResult = active.turnRight(board);
+			Log.d("NRA", "after turnRight");
+			Log.d("NRA", active.toString());
+			if (actionResult) {
+				board.getModel().updateGridActiveValueMatrix(active);
+			}
+
 			host.display.invalidatePhantom();
 		}
 
@@ -325,6 +340,7 @@ public class Controls extends Component {
 				// piece finished
 				Log.d("NRA", "Initial Soft Drop / piece finished");
 				host.state.board.getModel().updateGridValueMatrix();
+
 				vibrateBottom();
 				host.state.clearLines(false, 0);
 				host.state.pieceTransition(eventVibrationEnabled);
@@ -387,7 +403,7 @@ public class Controls extends Component {
 			if(!active.drop(board)) {
 				// piece finished
 				Log.d("NRA", "Autodrop if no playerDrop / piece finished");
-				Log.d("NRA", host.state.board.getModel().toString());
+				Log.v("NRA", host.state.board.getModel().toString());
 				vibrateBottom();
 				host.state.clearLines(false, 0);
 				host.state.pieceTransition(eventVibrationEnabled);

@@ -29,7 +29,7 @@ public class GameModel {
     }
 
     public void updateGridValueMatrix() {
-        Log.d("NRA", "cycleGridValueMatrix");
+        Log.d("NRA", "updateGridValueMatrix");
         try {
            for (int i = 0; i < gridColCount; i++) {
                 for (int j = 0; j < gridRowCount; j++) {
@@ -38,35 +38,44 @@ public class GameModel {
                     }
                 }
             }
-            Log.d("NRA", toString());
+            Log.v("NRA", toString());
         }
         catch (Exception e) {
-            Log.d("NRA", "GameModel.cycleGridValueMatrix() failed");
+            Log.e("NRA", "GameModel.updateGridValueMatrix() failed");
         }
     }
 
     public void updateGridActiveValueMatrix(Piece activePiece) {
+        Log.v("NRA", "GameModel.updateGridActiveValueMatrix(Piece activePiece)");
+        resetGridActiveValueMatrix();
         try {
             int x = activePiece.getX();
             int y = activePiece.getY();
             for (int i = 0; i < gridColCount; i++) {
-
                 for (int j = 0; j < gridRowCount; j++) {
                     if (i >= x && i < x + 4 && j >= y && j < y + 4) {
                         int u = x - i + 3;
                         int v = y - j + 3;
-                        Log.v("NRA", "gridActiveValueMatrix[" + j + "][" + i + "]=activePiece[" + (3 - v) + "][" + (3 - u) + "]=" + activePiece.getPatternNum()[3 - v][3 - u]);
                         gridActiveValueMatrix[j][i] = activePiece.getPatternNum()[3 - v][3 - u];
-                    } else {
-                        gridActiveValueMatrix[j][i]=0;
                     }
                 }
             }
+            Log.v("NRA", toString());
         }
         catch (Exception e) {
-            Log.d("NRA", "GameModel.updateGridValues() failed");
+            Log.e("NRA", "GameModel.updateGridActiveValueMatrix() failed");
         }
     }
+
+    public void resetGridActiveValueMatrix() {
+        for (int i = 0; i < gridColCount; i++) {
+            for (int j = 0; j < gridRowCount; j++) {
+                gridActiveValueMatrix[j][i]=0;
+            }
+        }
+    }
+
+
     public int getActivePieceIndex() {
         return activePieceIndex;
     }

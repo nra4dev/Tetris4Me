@@ -32,9 +32,6 @@ public class PieceGenerator {
 	}
 
 	public int next() {
-		if (true) {
-			return 0;
-		}
 		if(strategy== STRAT_RANDOM)
 			return rndgen.nextInt(7);
 		else {

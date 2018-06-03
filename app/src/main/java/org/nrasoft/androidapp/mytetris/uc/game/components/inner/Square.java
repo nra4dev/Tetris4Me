@@ -40,8 +40,9 @@ public class Square {
 		circlePaint.setColor(Color.BLACK);
 		circlePaint.setTextAlign(Paint.Align.CENTER);
 		textPaint = new Paint();
-		textPaint.setColor(Color.WHITE);
+		textPaint.setColor(Color.BLACK);
 		textPaint.setTextAlign(Paint.Align.CENTER);
+		textPaint.setFakeBoldText(true);
 		phantomAlpha = c.getResources().getInteger(R.integer.phantom_alpha);
 		squaresize = 0;
 		switch(type){
@@ -87,7 +88,7 @@ public class Square {
 
 		rectPaint.setAlpha(255);
 		canv.drawRect(0, 0, squaresize, squaresize, rectPaint);
-		canv.drawCircle(squaresize/2, squaresize/2, squaresize/2, circlePaint);
+		//canv.drawCircle(squaresize/2, squaresize/2, squaresize/2, circlePaint);
 		if (num >0) {
 			canv.drawText("" + num, squaresize / 2, squaresize / 2, textPaint);
 		}
@@ -112,7 +113,7 @@ public class Square {
 		if(type == type_empty)
 			return;
 		if(squareSize != squaresize) {
-			//reDraw(squareSize, num);
+			///reDraw(squareSize, num);
 		}
 		reDraw(squareSize, num);
 		if(isPhantom) {

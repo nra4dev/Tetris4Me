@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import org.nrasoft.androidapp.mytetris.uc.game.GameModel;
 import org.nrasoft.androidapp.mytetris.uc.game.pieces.PieceGenerator;
 import org.nrasoft.androidapp.R;
 import org.nrasoft.androidapp.mytetris.uc.game.pieces.*;
@@ -142,8 +143,10 @@ public class State extends Component {
 		
 		// starting pieces
 		activeIndex  = rng.next();
+		board.getModel().setActivePieceIndex(activeIndex);
 		previewIndex = rng.next();
 		activePieces[activeIndex].setActive(true);
+		board.getModel().setPreviewPieceIndex(activeIndex);
 
 		stateOfTheGame = state_startable;
 		scheduleSpawn = false;
@@ -267,13 +270,6 @@ public class State extends Component {
 	public void hold() {
 		if(host == null)
 			return;
-		
-		
-	}
-
-	public void showNums() {
-		Log.d("NRA", "showNums():... " );
-		Log.d("NRA", board.getNumsAsString());
 	}
 
 	public void finishTransition() {

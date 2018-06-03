@@ -50,6 +50,7 @@ public abstract class Piece4x4 extends Piece {
 		rotated[2][2] = pattern[2][1];
 		rotated[2][1] = pattern[1][1];
 
+		rotatedNum[0][0] = patternNum[0][3];
 		rotatedNum[0][3] = patternNum[3][3];
 		rotatedNum[3][3] = patternNum[3][0];
 		rotatedNum[3][0] = patternNum[0][0];

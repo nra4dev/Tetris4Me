@@ -1,6 +1,7 @@
 package org.nrasoft.androidapp.mytetris.uc.game.components;
 
 import org.nrasoft.androidapp.R;
+import org.nrasoft.androidapp.mytetris.uc.game.GameModel;
 import org.nrasoft.androidapp.mytetris.uc.game.components.inner.Row;
 import org.nrasoft.androidapp.mytetris.uc.game.components.inner.Square;
 import org.nrasoft.androidapp.mytetris.uc.game.GameActivity;
@@ -17,7 +18,7 @@ public class Board extends Component {
 	private Row topRow; // index 0
 	private Row currentRow;
 	private int currentIndex;
-	private int[][] nums;
+	private GameModel model;
 	private Row tempRow;
 	private boolean valid;
 	private Bitmap blockMap;
@@ -27,9 +28,8 @@ public class Board extends Component {
 		super(ga);
 		colCount = host.getResources().getInteger(R.integer.col_count);
 		rowCount = host.getResources().getInteger(R.integer.row_count);
-		nums = new int[rowCount][colCount];
 		valid = false;
-		
+		model = new GameModel();
 		/* Init Board */
 		topRow = new Row(colCount,host);
 		currentIndex = 0;
@@ -47,7 +47,7 @@ public class Board extends Component {
 	}
 
 	public void draw(int x, int y, int squareSize, Canvas c){ // top left corner of state board
-		Log.v("NRA", "Board.draw(x,y,squareSize) -> " + x + ","  + y + "," + squareSize);
+		Log.v("NRA", "Board.draw(x, y, squareSize) -> " + x + ","  + y + "," + squareSize);
 		Log.v("NRA", "Board.valid=" + valid);
 
 		if(topRow == null)
@@ -96,24 +96,8 @@ public class Board extends Component {
 		return rowCount;
 	}
 
-	public int[][] getNums() {
-		return nums;
-	}
-
-	public String getNumsAsString() {
-		String str = "";
-		try {
-            for (int row = 0; row < getRowCount(); row++) {
-                for (int col = 0; col < getColCount(); col++) {
-                    str += nums[row][col] + " ";
-                }
-                str += "\n";
-            }
-		}
-		catch (Exception e) {
-			Log.d("NRA", "getNumsAsString failed");
-		}
-		return str;
+	public GameModel getModel() {
+		return model;
 	}
 
 	public Square get(int x, int y) {
@@ -146,8 +130,8 @@ public class Board extends Component {
 		}
 	}
 
-	public void set(int x, int y, Square square, int num) {
-		Log.d("NRA", "Board.set(x,y,square, num) -> " + x + ","  + y + "," + square + ", " + num);
+	public void set(int x, int y, Square square, int value) {
+		Log.d("NRA", "Board.set(x,y,square, value) -> " + x + ","  + y + "," + square + ", " + value);
 		if(x < 0)
 			return;
 		if(x > (colCount - 1))
@@ -160,13 +144,13 @@ public class Board extends Component {
 			return;
 		if(square.isEmpty())
 			return;
-		
+
 		valid = false;
-		if (num > 0) {
+		if (value > 0) {
 			try {
-				nums[y][x] = num;
+				model.setGridValue(y, x, value);
 			} catch (Exception e) {
-                Log.d("NRA", "failed to set nums");
+				Log.d("NRA", "setGridValue failed" + e.getMessage());
 			}
 		}
 		if(currentIndex == y)
@@ -174,11 +158,11 @@ public class Board extends Component {
 		else if(currentIndex < y) {
 			currentRow = currentRow.below();
 			currentIndex++;
-			set(x, y, square, num);
+			set(x, y, square, value);
 		} else {
 			currentRow = currentRow.above();
 			currentIndex--;
-			set(x, y, square, num);
+			set(x, y, square, value);
 		}
 	}
 

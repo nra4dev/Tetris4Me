@@ -134,6 +134,11 @@ public abstract class Piece {
 		}
 		x = x_new;
 		y = y_new;
+		Log.d("NRA","after");
+		board.getModel().setActivePieceX(x);
+		board.getModel().setActivePieceY(y);
+		board.getModel().updateGridActiveValueMatrix(this);
+		Log.d("NRA", board.getModel().toString());
 		return true;
 	}
 	
@@ -220,8 +225,7 @@ public abstract class Piece {
 	 */
 	public void drawOnBoard(int xOffset, int yOffset, int ss, Canvas c) {
 		Log.v("NRA", "Piece.drawOnBoard(xOffset,yOffset,ss) -> (" + xOffset + ","  + yOffset + "," + ss + ")");
-		Log.v("NRA", "Piece.active=" + active);
-		Log.v("NRA", "Piece.squareSize=" + squareSize);
+		Log.v("NRA", toString());
 		if(!active)
 			return;
 		if(ss != squareSize) {
@@ -284,4 +288,28 @@ public abstract class Piece {
 		y = y_new;
 		return true;
 	}
+
+	public String toString() {
+		String str = "Piece\n";
+		str += "active=" + active + "\n";
+		str += "x=" + x + "\n";
+		str += "y=" + y + "\n";
+		str += "dim=" + dim + "\n";
+		str += "patternNum=\n";
+		try {
+			for (int i = 0; i < patternNum.length; i++) {
+				str += "\t";
+				for (int j = 0; j < patternNum[i].length; j++) {
+					str += patternNum[i][j] + " ";
+				}
+				str += "\n";
+			}
+		}
+		catch (Exception e) {
+			Log.d("NRA", "Piece.toString() failed");
+		}
+		return str;
+	}
 }
+
+

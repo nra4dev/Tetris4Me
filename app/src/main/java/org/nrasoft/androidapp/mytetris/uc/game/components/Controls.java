@@ -324,8 +324,7 @@ public class Controls extends Component {
 			if(!active.drop(board)) {
 				// piece finished
 				Log.d("NRA", "Initial Soft Drop / piece finished");
-				Log.d("NRA", "active.x" + active.getX());
-				Log.d("NRA", "active.y" + active.getY());
+				host.state.board.getModel().updateGridValueMatrix();
 				vibrateBottom();
 				host.state.clearLines(false, 0);
 				host.state.pieceTransition(eventVibrationEnabled);
@@ -345,8 +344,7 @@ public class Controls extends Component {
 				if(!active.drop(board)) {
 					// piece finished
 					Log.d("NRA", "Continuous Soft Drop / piece finished");
-					Log.d("NRA", "active.x=" + active.getX());
-					Log.d("NRA", "active.y=" + active.getY());
+					host.state.board.getModel().updateGridValueMatrix();
 					vibrateBottom();
 					host.state.clearLines(false, 0);
 					host.state.pieceTransition(eventVibrationEnabled);
@@ -365,9 +363,7 @@ public class Controls extends Component {
 				if(!active.drop(board)) {
 					// piece finished
 					Log.d("NRA", "Autodrop if faster than playerDrop / piece finished");
-					Log.d("NRA", "active.x=" + active.getX());
-					Log.d("NRA", "active.y=" + active.getY());
-					host.state.showNums();
+					host.state.board.getModel().updateGridValueMatrix();;
 					vibrateBottom();
 					host.state.clearLines(false, 0);
 					host.state.pieceTransition(eventVibrationEnabled);
@@ -391,9 +387,7 @@ public class Controls extends Component {
 			if(!active.drop(board)) {
 				// piece finished
 				Log.d("NRA", "Autodrop if no playerDrop / piece finished");
-				Log.d("NRA", "active.x=" + active.getX());
-				Log.d("NRA", "active.y=" + active.getY());
-				host.state.showNums();
+				Log.d("NRA", host.state.board.getModel().toString());
 				vibrateBottom();
 				host.state.clearLines(false, 0);
 				host.state.pieceTransition(eventVibrationEnabled);

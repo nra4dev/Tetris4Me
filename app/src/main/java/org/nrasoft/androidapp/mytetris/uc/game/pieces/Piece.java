@@ -104,7 +104,7 @@ public abstract class Piece {
 	 * @return true if movement was successfull.
 	 */
 	public boolean setPosition(int x_new, int y_new, boolean noInterrupt, Board board) {
-		Log.v("NRA", "Piece.setPosition(x_new, y_new, noInterrupt) -> " + x_new + ","  + y_new + "," + noInterrupt);
+		Log.v("NRA", "Piece.setPosition(x_new, y_new, noInterrupt) -> " + x_new + ","  + y_new + "," + noInterrupt + " entered");
 		boolean collision = false;
 		int leftOffset = 0;
 		int rightOffset = 0;
@@ -141,7 +141,7 @@ public abstract class Piece {
 		board.getModel().setActivePieceX(x);
 		board.getModel().setActivePieceY(y);
 		board.getModel().updateGridActiveValueMatrix(this);
-		Log.v("NRA", board.getModel().toString());
+		Log.d("NRA", "Piece.setPosition(x_new, y_new, noInterrupt) -> " + x_new + ","  + y_new + "," + noInterrupt + " finished");
 		return true;
 	}
 	

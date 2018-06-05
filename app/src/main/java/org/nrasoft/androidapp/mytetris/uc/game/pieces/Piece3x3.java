@@ -19,6 +19,7 @@ public abstract class Piece3x3 extends Piece {
 	 */
 	@Override
 	public boolean turnLeft(Board board) {
+
 		int maxLeftOffset = -4;
 		int maxRightOffset = -4;
 		int maxBottomOffset = -4;

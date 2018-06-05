@@ -32,8 +32,8 @@ public class Row {
 	}
 	
 	public void set(Square s, int i) {
-	//	if(s.isEmpty())
-	//		return;
+	    if(s.isEmpty())
+	    	return;
 		if((i >= 0) && (i < colCount)) {
 			fillStatus++;
 			elements[i] = s;

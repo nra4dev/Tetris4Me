@@ -24,13 +24,14 @@ public class GameModel {
         previewPieceIndex = -1;
         activePieceX = -1;
         activePieceY = -1;
+        this.gridValueTotalColumn = new int[gridRowCount];
         this.gridActiveValueMatrix = new int[gridRowCount][gridColCount];
         this.gridValueMatrix = new int[gridRowCount][gridColCount];
         this.gridColorMatrix = new int[gridRowCount][gridColCount];
     }
 
     public void updateGridValueMatrix() {
-        Log.d("NRA", "updateGridValueMatrix");
+        Log.d("NRA", "GameModel.updateGridValueMatrix");
         try {
            for (int i = 0; i < gridColCount; i++) {
                 for (int j = 0; j < gridRowCount; j++) {
@@ -40,7 +41,7 @@ public class GameModel {
                 }
             }
             gridValueTotalColumn = updateGridValueTotalColumn();
-            Log.v("NRA", "updateGridValueMatrix()\n" + toString());
+            Log.v("NRA", "GameModel.updateGridValueMatrix()\n" + toString());
         }
         catch (Exception e) {
             Log.e("NRA", "GameModel.updateGridValueMatrix() failed"+e.getMessage());
@@ -56,7 +57,7 @@ public class GameModel {
     }
 
     public int[] getGridValueTotalColumn() {
-        Log.v("NRA", "getGridValueTotalColumn");
+        Log.v("NRA", "GameModel.getGridValueTotalColumn");
             if(gridValueTotalColumn == null) {
                 return updateGridValueTotalColumn();
             } else {
@@ -67,8 +68,7 @@ public class GameModel {
     public int[] updateGridValueTotalColumn() {
         Log.v("NRA", "getGridValueTotalColumn");
         try {
-            this.gridValueTotalColumn = new int[gridColCount];
-            for (int i = 0; i < gridColCount; i++) {
+               for (int i = 0; i < gridColCount; i++) {
                 gridValueTotalColumn[i] = 0;
                 for (int j = 0; j < gridRowCount; j++) {
                     gridValueTotalColumn[i] += gridValueMatrix[gridRowCount - j - 1][i];

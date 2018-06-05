@@ -255,11 +255,12 @@ public class State extends Component {
 		if(host == null)
 			return;
 
-		//board.clearColumns();
+		board.clearColumns();
 
 	}
 
 	public void pieceTransition(boolean eventVibrationEnabled) {
+		Log.d("NRA", "State.pieceTransition(boolean eventVibrationEnabled) entered");
 		if(host == null)
 			return;
 		
@@ -274,6 +275,7 @@ public class State extends Component {
 		activeIndex  = previewIndex;
 		previewIndex = rng.next();
 		activePieces[activeIndex].reset(host);
+		Log.d("NRA", "State.pieceTransition(boolean eventVibrationEnabled) finished");
 	}
 	
 	public void hold() {
@@ -320,6 +322,8 @@ public class State extends Component {
 	 * @return true if controls is allowed to cycle()
 	 */
 	public boolean cycle(long tempTime) {
+		Log.v("NRA", "State.cycle(long tempTime)");
+
 		if(stateOfTheGame != state_running)
 			return false;
 

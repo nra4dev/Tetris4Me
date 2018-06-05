@@ -11,6 +11,7 @@ public class LPiece extends Piece3x3 {
 	
 	public LPiece(Context c) {
 		super(c);
+		lSquare = new Square(Piece.type_L,c);
 		num = c.getResources().getInteger(R.integer.LPiece_num);
 		initPattern(c);
 		reDraw();

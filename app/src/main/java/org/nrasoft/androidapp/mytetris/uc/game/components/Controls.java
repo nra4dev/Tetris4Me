@@ -206,6 +206,7 @@ public class Controls extends Component {
 	}
 
 	public void cycle(long tempTime) {
+		Log.v("NRA", "Controls.cycle(long tempTime)");
 		long gameTime = host.state.getTime();
 		Piece active = host.state.getActivePiece();
 		Board board = host.state.getBoard();
@@ -320,7 +321,7 @@ public class Controls extends Component {
 		if(playerHardDrop) {
 			board.interruptClearAnimation();
 			int hardDropDistance = active.hardDrop(false, board);
-			Log.d("NRA", "Controls.cycle(...) - playerHardDrop");
+			Log.d("NRA", "Controls.cycle(long tempTime) - Player Hard Drop");
 			vibrateBottom();
 			host.state.board.getModel().updateGridValueMatrix();
 			host.state.clearLines(true, hardDropDistance);
@@ -341,7 +342,7 @@ public class Controls extends Component {
 			continuousSoftDrop = true;
 			if(!active.drop(board)) {
 				// piece finished
-				Log.d("NRA", "Controls.cycle(...) - Player soft drop / piece finished");
+				Log.d("NRA", "Controls.cycle(long tempTime) - Player Soft Drop / piece finished");
 				vibrateBottom();
 
 				host.state.clearLines(false, 0);
@@ -362,7 +363,7 @@ public class Controls extends Component {
 			if(gameTime >= host.state.getNextPlayerDropTime()) {
 				if(!active.drop(board)) {
 					// piece finished
-					Log.d("NRA", "Controls.cycle(...) - Continuous soft drop / piece finished");
+					Log.d("NRA", "Controls.cycle(long tempTime) - Continuous Soft Drop / piece finished");
 					vibrateBottom();
 					host.state.board.getModel().updateGridValueMatrix();;
 					host.state.clearLines(false, 0);
@@ -382,7 +383,7 @@ public class Controls extends Component {
 			} else if(gameTime >= host.state.getNextDropTime()) {
 				if(!active.drop(board)) {
 					// piece finished
-					Log.d("NRA", "Controls.cycle(...) - Auto drop / piece finished");
+					Log.d("NRA", "Controls.cycle(long tempTime) - Auto Drop / piece finished");
 					vibrateBottom();
 					host.state.board.getModel().updateGridValueMatrix();;
 					host.state.clearLines(false, 0);
@@ -407,11 +408,11 @@ public class Controls extends Component {
 		} else if(gameTime >= host.state.getNextDropTime()) {
 			if(!active.drop(board)) {
 				// piece finished
-				Log.d("NRA", "Controls.cycle(...) - Autodrop / piece finished");
+				Log.d("NRA", "Controls.cycle(...) - Auto Drop / piece finished");
 				vibrateBottom();
-				host.state.board.getModel().updateGridValueMatrix();;
+				host.state.board.getModel().updateGridValueMatrix();
 				host.state.clearLines(false, 0);
-				host.state.clearColumns(false, 0);
+				//host.state.clearColumns(false, 0);
 				host.state.pieceTransition(eventVibrationEnabled);
 				board.invalidate();
 			}

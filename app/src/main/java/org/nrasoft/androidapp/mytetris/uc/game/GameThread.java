@@ -2,6 +2,7 @@ package org.nrasoft.androidapp.mytetris.uc.game;
 
 import android.graphics.Canvas;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
@@ -44,7 +45,9 @@ public class GameThread extends Thread {
 		int i = 0;
         
         while (this.runFlag) {
-	            if(firstTime){
+				Log.d("NRA", "GameThread.run()");
+
+			if(firstTime){
 	            	firstTime = false;
 	            	continue;
 	            }

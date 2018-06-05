@@ -171,9 +171,10 @@ public class Board extends Component {
 	}
 
 	public void cycle(long time) {
+		Log.v("NRA", "Board.cycle(long tempTime)");
 		// begin at bottom line
 		if(topRow == null)
-			throw new RuntimeException("BlockBoard was not initialized!");
+			throw new RuntimeException("Board was not initialized!");
 		
 		tempRow = topRow.above();
 		for(int i = 0; i < rowCount; i++) {

@@ -45,7 +45,14 @@
     <integer name="clearAnimation_flashInterval">200</integer>
     <integer name="clearAnimation_enableBurst">0</integer>
     <integer name="clearAnimation_burstDuration">200</integer>
-    
+    <integer name="columnMagicSum">10</integer>
+    <integer name="IPiece_num">1</integer>
+    <integer name="JPiece_num">1</integer>
+    <integer name="LPiece_num">1</integer>
+    <integer name="OPiece_num">1</integer>
+    <integer name="SPiece_num">1</integer>
+    <integer name="TPiece_num">1</integer>
+    <integer name="ZPiece_num">1</integer>
     <integer name="levels">30</integer>
     <integer name="levelsplusone">31</integer>
     <integer-array name="intervals">

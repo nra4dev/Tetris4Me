@@ -215,11 +215,11 @@ public class Controls extends Component {
 		// Left Rotation
 		if(leftRotation) {
 			leftRotation = false;
-			Log.d("NRA", "before turnLeft");
-			Log.d("NRA", active.toString());
+			Log.v("NRA", "before turnLeft");
+			Log.v("NRA", active.toString());
 			actionResult = active.turnLeft(board);
-			Log.d("NRA", "after turnLeft");
-			Log.d("NRA", active.toString());
+			Log.v("NRA", "after turnLeft");
+			Log.v("NRA", active.toString());
 			if (actionResult) {
 				board.getModel().updateGridActiveValueMatrix(active);
 			}
@@ -230,11 +230,11 @@ public class Controls extends Component {
 		// Right Rotation
 		if(rightRotation) {
 			rightRotation = false;
-			Log.d("NRA", "before turnRight");
-			Log.d("NRA", active.toString());
+			Log.v("NRA", "before turnRight");
+			Log.v("NRA", active.toString());
 			actionResult = active.turnRight(board);
-			Log.d("NRA", "after turnRight");
-			Log.d("NRA", active.toString());
+			Log.v("NRA", "after turnRight");
+			Log.v("NRA", active.toString());
 			if (actionResult) {
 				board.getModel().updateGridActiveValueMatrix(active);
 			}
@@ -320,8 +320,11 @@ public class Controls extends Component {
 		if(playerHardDrop) {
 			board.interruptClearAnimation();
 			int hardDropDistance = active.hardDrop(false, board);
+			Log.d("NRA", "Controls.cycle(...) - playerHardDrop");
 			vibrateBottom();
+			host.state.board.getModel().updateGridValueMatrix();
 			host.state.clearLines(true, hardDropDistance);
+			host.state.clearColumns(true, hardDropDistance);
 			host.state.pieceTransition(eventVibrationEnabled);
 			board.invalidate();
 			playerHardDrop = false;
@@ -338,11 +341,11 @@ public class Controls extends Component {
 			continuousSoftDrop = true;
 			if(!active.drop(board)) {
 				// piece finished
-				Log.d("NRA", "Initial Soft Drop / piece finished");
-				host.state.board.getModel().updateGridValueMatrix();
-
+				Log.d("NRA", "Controls.cycle(...) - Player soft drop / piece finished");
 				vibrateBottom();
+
 				host.state.clearLines(false, 0);
+				host.state.clearColumns(false, 0);
 				host.state.pieceTransition(eventVibrationEnabled);
 				board.invalidate();
 			} else {
@@ -359,10 +362,11 @@ public class Controls extends Component {
 			if(gameTime >= host.state.getNextPlayerDropTime()) {
 				if(!active.drop(board)) {
 					// piece finished
-					Log.d("NRA", "Continuous Soft Drop / piece finished");
-					host.state.board.getModel().updateGridValueMatrix();
+					Log.d("NRA", "Controls.cycle(...) - Continuous soft drop / piece finished");
 					vibrateBottom();
+					host.state.board.getModel().updateGridValueMatrix();;
 					host.state.clearLines(false, 0);
+					host.state.clearColumns(false, 0);
 					host.state.pieceTransition(eventVibrationEnabled);
 					board.invalidate();
 				} else {
@@ -378,10 +382,11 @@ public class Controls extends Component {
 			} else if(gameTime >= host.state.getNextDropTime()) {
 				if(!active.drop(board)) {
 					// piece finished
-					Log.d("NRA", "Autodrop if faster than playerDrop / piece finished");
-					host.state.board.getModel().updateGridValueMatrix();;
+					Log.d("NRA", "Controls.cycle(...) - Auto drop / piece finished");
 					vibrateBottom();
+					host.state.board.getModel().updateGridValueMatrix();;
 					host.state.clearLines(false, 0);
+					host.state.clearColumns(false, 0);
 					host.state.pieceTransition(eventVibrationEnabled);
 					board.invalidate();
 				}
@@ -402,10 +407,11 @@ public class Controls extends Component {
 		} else if(gameTime >= host.state.getNextDropTime()) {
 			if(!active.drop(board)) {
 				// piece finished
-				Log.d("NRA", "Autodrop if no playerDrop / piece finished");
-				Log.v("NRA", host.state.board.getModel().toString());
+				Log.d("NRA", "Controls.cycle(...) - Autodrop / piece finished");
 				vibrateBottom();
+				host.state.board.getModel().updateGridValueMatrix();;
 				host.state.clearLines(false, 0);
+				host.state.clearColumns(false, 0);
 				host.state.pieceTransition(eventVibrationEnabled);
 				board.invalidate();
 			}

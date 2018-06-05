@@ -26,7 +26,7 @@ public abstract class Piece {
 	protected int squareSize;
 	protected int patternNum[][];
 	protected int rotatedNum[][];
-
+	protected int num;
 	protected Square pattern[][]; 	// square matrix
 	protected Square rotated[][]; 	// square matrix
 	private Square emptySquare;
@@ -46,7 +46,6 @@ public abstract class Piece {
 		y = 0;
 		active = false;
 		isPhantom = false;
-		
 		emptySquare =  new Square(Square.type_empty,c);
 		
 		pattern = new Square[dim][dim]; // empty piece
@@ -96,12 +95,16 @@ public abstract class Piece {
 		}
 	}
 
+	public int getNum() {
+		return num;
+	}
+
 	/**
 	 * 
 	 * @return true if movement was successfull.
 	 */
 	public boolean setPosition(int x_new, int y_new, boolean noInterrupt, Board board) {
-		Log.d("NRA", "Piece.setPosition(x_new, y_new, noInterrupt) -> " + x_new + ","  + y_new + "," + noInterrupt);
+		Log.v("NRA", "Piece.setPosition(x_new, y_new, noInterrupt) -> " + x_new + ","  + y_new + "," + noInterrupt);
 		boolean collision = false;
 		int leftOffset = 0;
 		int rightOffset = 0;

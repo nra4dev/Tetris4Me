@@ -250,6 +250,15 @@ public class State extends Component {
 		// host.saveScore(score); is not supported by ScoreDataSource
 	}
 
+	public void clearColumns(boolean playerHardDrop, int hardDropDistance) {
+		Log.d("NRA", "State.clearColumns(boolean playerHardDrop, int hardDropDistance)");
+		if(host == null)
+			return;
+
+		//board.clearColumns();
+
+	}
+
 	public void pieceTransition(boolean eventVibrationEnabled) {
 		if(host == null)
 			return;

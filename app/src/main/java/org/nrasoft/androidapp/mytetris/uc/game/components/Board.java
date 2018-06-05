@@ -6,9 +6,13 @@ import org.nrasoft.androidapp.mytetris.uc.game.components.inner.Row;
 import org.nrasoft.androidapp.mytetris.uc.game.components.inner.Square;
 import org.nrasoft.androidapp.mytetris.uc.game.GameActivity;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Board extends Component {
@@ -196,7 +200,33 @@ public class Board extends Component {
 		currentIndex = 0;
 		return clearCounter;
 	}
-
+	public int clearColumns() {
+		Log.d("NRA", "Board.clearColumns() entered");
+		int clearCounter = 0;
+		try {
+			int columnMagicSum = host.getResources().getInteger(R.integer.columnMagicSum);
+			for (int i = 0; i < model.getGridColCount(); i++) {
+				if (model.getGridValueTotalColumn()[i] == columnMagicSum) {
+					Log.i("NRA", "getGridValueTotalColumn()=" + columnMagicSum);
+					clearCounter++;
+					valid = false;
+					tempRow = topRow;
+					for (int j = 0; j < rowCount; j++) {
+						if (tempRow != null) {
+							tempRow.clear(i);
+							tempRow = tempRow.below();
+						}
+					}
+					currentRow = topRow;
+					currentIndex = 0;
+				}
+			}
+		} catch (Exception e) {
+			Log.e("NRA", "Board.clearColumns() failed");
+		}
+		Log.d("NRA", "Board.clearColumns() finished");
+		return clearCounter;
+	}
 	public Row getTopRow() {
 		return topRow;
 	}
@@ -211,7 +241,7 @@ public class Board extends Component {
 	public void interruptClearAnimation() {
 		// begin at bottom line
 		if(topRow == null)
-			throw new RuntimeException("BlockBoard was not initialized!");
+			throw new RuntimeException("Board was not initialized!");
 		
 		Row interator = topRow.above();
 		for(int i = 0; i < rowCount; i++) {

@@ -14,6 +14,7 @@ public class GameModel {
     private int activePieceY;
     private int previewPieceIndex;
 
+    private int[] gridValueTotalColumn;
     private int[][] gridActiveValueMatrix;
     private int[][] gridValueMatrix;
     private int[][] gridColorMatrix;
@@ -35,14 +36,52 @@ public class GameModel {
                 for (int j = 0; j < gridRowCount; j++) {
                     if (gridActiveValueMatrix[j][i]>0) {
                         gridValueMatrix[j][i] = gridActiveValueMatrix[j][i];
-                    }
+                     }
                 }
             }
-            Log.v("NRA", toString());
+            gridValueTotalColumn = updateGridValueTotalColumn();
+            Log.v("NRA", "updateGridValueMatrix()\n" + toString());
         }
         catch (Exception e) {
-            Log.e("NRA", "GameModel.updateGridValueMatrix() failed");
+            Log.e("NRA", "GameModel.updateGridValueMatrix() failed"+e.getMessage());
         }
+    }
+
+    public int getGridRowCount() {
+        return gridRowCount;
+    }
+
+    public int getGridColCount() {
+        return gridColCount;
+    }
+
+    public int[] getGridValueTotalColumn() {
+        Log.v("NRA", "getGridValueTotalColumn");
+            if(gridValueTotalColumn == null) {
+                return updateGridValueTotalColumn();
+            } else {
+                return gridValueTotalColumn;
+            }
+    }
+
+    public int[] updateGridValueTotalColumn() {
+        Log.v("NRA", "getGridValueTotalColumn");
+        try {
+            this.gridValueTotalColumn = new int[gridColCount];
+            for (int i = 0; i < gridColCount; i++) {
+                gridValueTotalColumn[i] = 0;
+                for (int j = 0; j < gridRowCount; j++) {
+                    gridValueTotalColumn[i] += gridValueMatrix[gridRowCount - j - 1][i];
+                    //    if (gridValueTotalColumn[i] > 0 && gridValueMatrix[i][gridRowCount - j - 2] == 0) {
+                    //        break;
+                    //    }
+                }
+            }
+        }
+        catch (Exception e) {
+            Log.e("NRA", "GameModel.updateGridValueTotalColumn() failed: " + e.getMessage());;
+        }
+        return gridValueTotalColumn;
     }
 
     public void updateGridActiveValueMatrix(Piece activePiece) {
@@ -51,27 +90,38 @@ public class GameModel {
         try {
             int x = activePiece.getX();
             int y = activePiece.getY();
+            int dim = activePiece.getDim();
             for (int i = 0; i < gridColCount; i++) {
                 for (int j = 0; j < gridRowCount; j++) {
-                    if (i >= x && i < x + 4 && j >= y && j < y + 4) {
-                        int u = x - i + 3;
-                        int v = y - j + 3;
-                        gridActiveValueMatrix[j][i] = activePiece.getPatternNum()[3 - v][3 - u];
+                    if (i >= x && i < x + dim && j >= y && j < y + dim) {
+                        int u = x - i + dim - 1;
+                        int v = y - j + dim - 1;
+                        gridActiveValueMatrix[j][i] = activePiece.getPatternNum()[dim - 1 - v][dim - 1  - u];
                     }
                 }
             }
             Log.v("NRA", toString());
         }
         catch (Exception e) {
-            Log.e("NRA", "GameModel.updateGridActiveValueMatrix() failed");
+            Log.e("NRA", "GameModel.updateGridActiveValueMatrix() failed: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
+    public int[] getGridValueColumn(int colIndex) {
+        return getColumn(gridValueMatrix, colIndex);
+    }
+
     public void resetGridActiveValueMatrix() {
-        for (int i = 0; i < gridColCount; i++) {
-            for (int j = 0; j < gridRowCount; j++) {
-                gridActiveValueMatrix[j][i]=0;
+        try {
+            for (int i = 0; i < gridColCount; i++) {
+                for (int j = 0; j < gridRowCount; j++) {
+                    gridActiveValueMatrix[j][i]=0;
+                }
             }
+        }
+        catch (Exception e) {
+            Log.e("NRA", "GameModel.resetGridActiveValueMatrix() failed");
         }
     }
 
@@ -125,19 +175,19 @@ public class GameModel {
     }
 
     public String toString() {
-        String str = "GameModel\n";
+        String str = "GameModel.toString()\n";
         str += "activePieceIndex=" + activePieceIndex + "\n";
         str += "activePieceX=" + activePieceX + "\n";
         str += "activePieceY=" + activePieceY + "\n";
         try {
-            str += "gridActiveValueMatrix=\n";
-            for (int i = 0; i < gridRowCount; i++) {
-                str += "\t";
-                for (int j = 0; j < gridColCount; j++) {
-                    str += gridActiveValueMatrix[i][j] + " ";
-                }
-                str += "\n";
-            }
+//            str += "gridActiveValueMatrix=\n";
+//            for (int i = 0; i < gridRowCount; i++) {
+//                str += "\t";
+//                for (int j = 0; j < gridColCount; j++) {
+//                    str += gridActiveValueMatrix[i][j] + " ";
+//                }
+//                str += "\n";
+//            }
             str += "gridValueMatrix=\n";
             for (int i = 0; i < gridRowCount; i++) {
                 str += "\t";
@@ -146,10 +196,28 @@ public class GameModel {
                 }
                 str += "\n";
             }
+            str += "gridValueTotalColumn=\n";
+            if (gridValueTotalColumn!=null) {
+                str += "\t";
+                for (int i = 0; i < gridColCount; i++) {
+                    str += gridValueTotalColumn[i] + " ";
+                }
+            } else {
+                str +="null";
+            }
+
         }
         catch (Exception e) {
             Log.d("NRA", "GameModel.toString() failed");
         }
         return str;
+    }
+
+    public static int[] getColumn(int[][] matrix, int index){
+        int[] column = new int[matrix[0].length];
+        for(int i=0; i<column.length; i++){
+            column[i] = matrix[i][index];
+        }
+        return column;
     }
 }

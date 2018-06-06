@@ -194,6 +194,7 @@ public class Board extends Component {
 			if(clearPointer.isFull()) {
 				clearCounter++;
 				clearPointer.clear(this, host.state.getAutoDropInterval());
+				model.clearLine(i);
 			}
 			clearPointer = clearPointer.above();
 		}
@@ -214,8 +215,9 @@ public class Board extends Component {
 					tempRow = topRow;
 					for (int j = 0; j < rowCount; j++) {
 						if (tempRow != null) {
-							tempRow.clear(i);
+						//	tempRow.clear(i);
 							tempRow = tempRow.below();
+						//	model.clearLine(j);
 						}
 					}
 					currentRow = topRow;

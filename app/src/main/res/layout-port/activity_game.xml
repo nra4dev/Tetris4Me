@@ -112,6 +112,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="8dp"
                 android:layout_weight="0" />
+            <Button
+                android:id="@+id/resumebutton_1"
+                style="@android:style/Widget.ImageWell"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:text="@string/resumebutton"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/square_error"
+                android:textColorHint="@color/holo_grey" />
+
+            <View
+                android:id="@+id/View05"
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:layout_weight="0" />
+            <Button
+                android:id="@+id/restartbutton_1"
+                style="@android:style/Widget.ImageWell"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:text="@string/restartbutton"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/square_error"
+                android:textColorHint="@color/holo_grey" />
 
         </LinearLayout>
 

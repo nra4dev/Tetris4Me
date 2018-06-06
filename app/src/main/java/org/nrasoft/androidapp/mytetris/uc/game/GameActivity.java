@@ -1,17 +1,17 @@
 package org.nrasoft.androidapp.mytetris.uc.game;
 
 import org.nrasoft.androidapp.R;
-import org.nrasoft.androidapp.mytetris.uc.etc.DefeatDialogFragment;
+import org.nrasoft.androidapp.mytetris.uc.etc.DefeatDialog;
 import org.nrasoft.androidapp.mytetris.uc.main.MainActivity;
 import org.nrasoft.androidapp.mytetris.uc.game.components.inner.Sound;
 import org.nrasoft.androidapp.mytetris.uc.game.components.Controls;
 import org.nrasoft.androidapp.mytetris.uc.game.components.State;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,9 +19,12 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.view.View.OnTouchListener;
+import android.widget.TextView;
+
+import static org.nrasoft.androidapp.mytetris.uc.main.MainActivity.SCORE_REQUEST;
 
 
-public class GameActivity extends FragmentActivity {
+public class GameActivity extends Activity {
 
 
 	// components
@@ -34,7 +37,7 @@ public class GameActivity extends FragmentActivity {
 	private GameThread mainThread;
 
 	//
-	private DefeatDialogFragment dialog;
+	private DefeatDialog dialog;
 	private boolean layoutSwap;
 
 	public static final int NEW_GAME = 0;
@@ -57,7 +60,7 @@ public class GameActivity extends FragmentActivity {
 		int value = NEW_GAME;
 		
 		/* Create Components */
-		state = (State)getLastCustomNonConfigurationInstance();
+		//state = (State)getLastCustomNonConfigurationInstance();
 		if(state == null) {
 			/* Check for Resuming (or Resumption?) */
 			if(b!=null)
@@ -65,12 +68,12 @@ public class GameActivity extends FragmentActivity {
 				
 			if((value == NEW_GAME)) {
 				state = State.getNewInstance(this);
-				state.setLevel(b.getInt("level"));
+			//	state.setLevel(b.getInt("level"));
 			} else
 				state = State.getInstance(this);
 		}
 		state.reconnect(this);
-		dialog = new DefeatDialogFragment();
+		dialog = new DefeatDialog(this);
 		controls = new Controls(this);
 		display = new GameDisplay(this);
 		sound = new Sound(this);
@@ -88,14 +91,39 @@ public class GameActivity extends FragmentActivity {
 		dialog.setCancelable(false);
 		if(!state.isResumable())
 			gameOver(state.getScore(), state.getTimeString(), state.getAPM());
-		
+
+		final GameView gv = (GameView)findViewById(R.id.gameSurfaceView);
+
 		/* Register Button callback Methods */
 		((Button)findViewById(R.id.pausebutton_1)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				GameActivity.this.finish();
+				//GameActivity.this.finish();
+				destroyWorkThread();
 			}
 		});
+
+		((Button)findViewById(R.id.resumebutton_1)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				start(gv);
+			}
+		});
+
+        final Activity a = this;
+		((Button)findViewById(R.id.restartbutton_1)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+                restartActivity(a);
+			}
+            private void restartActivity(Activity activity){
+                Intent intent=new Intent();
+                intent.setClass(activity, activity.getClass());
+                activity.startActivity(intent);
+                activity.finish();
+            }
+		});
+
 		((GameView)findViewById(R.id.gameSurfaceView)).setOnTouchListener(new OnTouchListener() {
 		    @Override
 		    public boolean onTouch(View v, MotionEvent event) {
@@ -186,9 +214,16 @@ public class GameActivity extends FragmentActivity {
 		    }
 		});
 
-		((GameView)findViewById(R.id.gameSurfaceView)).init();
-		((GameView)findViewById(R.id.gameSurfaceView)).setHost(this);
+		gv.init();
+		gv.setHost(this);
 	}
+
+    public void restartActivity(Activity activity){
+        Intent intent=new Intent();
+        intent.setClass(activity, activity.getClass());
+        activity.startActivity(intent);
+        activity.finish();
+    }
 	
 	/**
 	 * Called by GameSurfaceView upon completed creation
@@ -278,14 +313,14 @@ public class GameActivity extends FragmentActivity {
     	state.setRunning(true);
     };
     
-    @Override
-    public Object onRetainCustomNonConfigurationInstance () {
-        return state;
-    }
+//    @Override
+//    public Object onRetainCustomNonConfigurationInstance () {
+//        return state;
+//    }
 	
 	public void gameOver(long score, String gameTime, int apm) {
 		dialog.setData(score, gameTime, apm);
-		dialog.show(getSupportFragmentManager(), "hamster");
+		//dialog.show(getSupportFragmentManager(), "hamster");
 	}
 
 }

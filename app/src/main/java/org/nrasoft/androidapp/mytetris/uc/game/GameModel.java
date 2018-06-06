@@ -84,6 +84,10 @@ public class GameModel {
         return gridValueTotalColumn;
     }
 
+    public int[][] getGridValueMatrix() {
+        return gridValueMatrix;
+    }
+
     public void updateGridActiveValueMatrix(Piece activePiece) {
         Log.v("NRA", "GameModel.updateGridActiveValueMatrix(Piece activePiece)");
         resetGridActiveValueMatrix();
@@ -158,7 +162,41 @@ public class GameModel {
         this.previewPieceIndex = previewPieceIndex;
     }
 
-    public int[][] getGridValueMatrix() {
+    public void clearLine(int k) {
+        Log.d("NRA", "GameModel.clearLine("+ k + ") entered");
+        Log.d("NRA", toString());
+        try {
+            int[][] gridValueMatrixClone = cloneGridValueMatrix();
+
+            for (int i = 0; i < gridColCount; i++) {
+                for (int j = 0; j < gridRowCount; j++) {
+                    if (j > k) {
+                        gridValueMatrix[j][i] = gridValueMatrixClone[j][i];
+                    } else if (j <= k && j >= 1){
+                        gridValueMatrix[j][i] =  gridValueMatrixClone[j-1][i];
+                    }  else if (j == 0){
+                        gridValueMatrix[j][i] = 0;
+                    }
+                }
+            }
+            Log.d("NRA", toString());
+        }
+        catch (Exception e) {
+            Log.e("NRA", "GameModel.clearLine(" + k + ") failed");
+        }
+    }
+
+    public int[][] cloneGridValueMatrix() {
+        int[][] clone = new int[gridRowCount][gridColCount];
+        for (int i = 0; i < gridColCount; i++) {
+            for (int j = 0; j < gridRowCount; j++) {
+                clone[j][i] = gridValueMatrix[j][i];
+            }
+        }
+        return clone;
+    }
+
+    public int[][] clearColumn() {
         return gridValueMatrix;
     }
 

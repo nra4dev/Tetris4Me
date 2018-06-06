@@ -45,8 +45,6 @@ public class GameThread extends Thread {
 		int i = 0;
         
         while (this.runFlag) {
-				Log.d("NRA", "GameThread.run()");
-
 			if(firstTime){
 	            	firstTime = false;
 	            	continue;

@@ -347,6 +347,7 @@ public class Controls extends Component {
 
 				host.state.clearLines(false, 0);
 				host.state.clearColumns(false, 0);
+				Log.i("NRA", "GameModel.toString()\n" + host.state.board.getModel().toString());
 				host.state.pieceTransition(eventVibrationEnabled);
 				board.invalidate();
 			} else {
@@ -368,6 +369,7 @@ public class Controls extends Component {
 					host.state.board.getModel().updateGridValueMatrix();;
 					host.state.clearLines(false, 0);
 					host.state.clearColumns(false, 0);
+					Log.i("NRA", "GameModel.toString()\n" + host.state.board.getModel().toString());
 					host.state.pieceTransition(eventVibrationEnabled);
 					board.invalidate();
 				} else {
@@ -388,6 +390,7 @@ public class Controls extends Component {
 					host.state.board.getModel().updateGridValueMatrix();;
 					host.state.clearLines(false, 0);
 					host.state.clearColumns(false, 0);
+					Log.i("NRA", "GameModel.toString()\n" + host.state.board.getModel().toString());
 					host.state.pieceTransition(eventVibrationEnabled);
 					board.invalidate();
 				}
@@ -412,7 +415,8 @@ public class Controls extends Component {
 				vibrateBottom();
 				host.state.board.getModel().updateGridValueMatrix();
 				host.state.clearLines(false, 0);
-				//host.state.clearColumns(false, 0);
+				host.state.clearColumns(false, 0);
+				Log.i("NRA", "GameModel.toString()\n" + host.state.board.getModel().toString());
 				host.state.pieceTransition(eventVibrationEnabled);
 				board.invalidate();
 			}

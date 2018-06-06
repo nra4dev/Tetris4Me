@@ -141,7 +141,7 @@ public abstract class Piece {
 		board.getModel().setActivePieceX(x);
 		board.getModel().setActivePieceY(y);
 		board.getModel().updateGridActiveValueMatrix(this);
-		Log.d("NRA", "Piece.setPosition(x_new, y_new, noInterrupt) -> " + x_new + ","  + y_new + "," + noInterrupt + " finished");
+		Log.v("NRA", "Piece.setPosition(x_new, y_new, noInterrupt) -> " + x_new + ","  + y_new + "," + noInterrupt + " finished");
 		return true;
 	}
 	

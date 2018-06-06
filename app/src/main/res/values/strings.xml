@@ -13,6 +13,8 @@
     <string name="resumeButtonString">Resume Game</string>
     <string name="quitButtonString">Exit</string>
     <string name="pausebutton">Pause</string>
+    <string name="resumebutton">Resume</string>
+    <string name="restartbutton">Restart</string>
     <string name="holdbuttonstring">Hold</string>
     <string name="playerNameInputFieldHint">Choose your player name</string>
     <string name="highscoreListDescription">Highscores</string>

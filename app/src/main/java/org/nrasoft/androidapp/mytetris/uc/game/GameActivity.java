@@ -47,13 +47,13 @@ public class GameActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_layoutswap", false)) {
+		//if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_layoutswap", false)) {
+		//	setContentView(R.layout.activity_game_alt);
+		//	layoutSwap = true;
+		//} else {
 			setContentView(R.layout.activity_game_alt);
-			layoutSwap = true;
-		} else {
-			setContentView(R.layout.activity_game);
 			layoutSwap = false;
-		}
+		//}
 
 		/* Read Starting Arguments */
 		Bundle b = getIntent().getExtras();

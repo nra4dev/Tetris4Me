@@ -187,6 +187,8 @@ public class Board extends Component {
 
 
 	public int clearLines(int dim) {
+		Log.v("NRA", "Board.clearLines() entered");
+		Log.v("NRA", model.toString());
 		valid = false;
 		Row clearPointer = currentRow;
 		int clearCounter = 0;
@@ -200,10 +202,13 @@ public class Board extends Component {
 		}
 		currentRow = topRow;
 		currentIndex = 0;
+		Log.v("NRA", "Board.clearLines() finished");
+		Log.v("NRA", model.toString());
 		return clearCounter;
 	}
 	public int clearColumns() {
-		Log.d("NRA", "Board.clearColumns() entered");
+		Log.v("NRA", "Board.clearColumns() entered");
+		Log.v("NRA", model.toString());
 		int clearCounter = 0;
 		try {
 			int columnMagicSum = host.getResources().getInteger(R.integer.columnMagicSum);
@@ -227,7 +232,8 @@ public class Board extends Component {
 		} catch (Exception e) {
 			Log.e("NRA", "Board.clearColumns() failed");
 		}
-		Log.d("NRA", "Board.clearColumns() finished");
+		Log.v("NRA", "Board.clearColumns() finished");
+		Log.v("NRA", model.toString());
 		return clearCounter;
 	}
 	public Row getTopRow() {

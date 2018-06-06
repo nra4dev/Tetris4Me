@@ -251,7 +251,6 @@ public class State extends Component {
 	}
 
 	public void clearColumns(boolean playerHardDrop, int hardDropDistance) {
-		Log.d("NRA", "State.clearColumns(boolean playerHardDrop, int hardDropDistance)");
 		if(host == null)
 			return;
 

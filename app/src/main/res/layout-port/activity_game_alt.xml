@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkbluegreen"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".GameActivity" >
 
-    
 
     <org.nrasoft.androidapp.mytetris.uc.game.GameView
         android:id="@+id/gameSurfaceView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" 
-        android:background="@null" />
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.6" >
+        android:layout_weight="0.5"
+        android:background="@color/darkbluegreen">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -47,7 +45,7 @@
                     android:adjustViewBounds="false"
                     android:clickable="true"
                     android:contentDescription="left move Button"
-                	android:scaleType="centerInside"
+                    android:scaleType="centerInside"
                     android:src="@drawable/left_button_icon_noburn" />
 
                 <View
@@ -64,7 +62,7 @@
                     android:layout_weight="1"
                     android:clickable="true"
                     android:contentDescription="right Move Button"
-                	android:scaleType="centerInside"
+                    android:scaleType="centerInside"
                     android:src="@drawable/right_button_icon_noburn" />
             </LinearLayout>
 
@@ -75,15 +73,16 @@
                 android:layout_weight="0.1" />
 
             <ImageButton
-                android:id="@+id/hardDropButton"
+                android:id="@+id/softDropButton"
                 style="@android:style/Widget.ImageWell"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:contentDescription="Hard Drop Button"
+                android:contentDescription="soft Drop Button"
                 android:scaleType="centerInside"
-                android:src="@drawable/hard_drop_button_icon_noburn" />
+                android:src="@drawable/soft_drop_button_icon_noburn" />
+
         </LinearLayout>
 
         <View
@@ -96,7 +95,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/pausebutton_1"
@@ -105,16 +104,41 @@
                 android:layout_height="48dp"
                 android:layout_weight="0"
                 android:text="@string/pausebutton"
-            	android:textColor="@color/square_error" 
-            	android:textAppearance="?android:attr/textAppearanceMedium"
-            	android:textColorHint="@color/holo_grey" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/square_error"
+                android:textColorHint="@color/holo_grey" />
 
             <View
                 android:id="@+id/View01"
                 android:layout_width="wrap_content"
                 android:layout_height="8dp"
                 android:layout_weight="0" />
+            <Button
+                android:id="@+id/resumebutton_1"
+                style="@android:style/Widget.ImageWell"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:text="@string/resumebutton"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/square_error"
+                android:textColorHint="@color/holo_grey" />
 
+            <View
+                android:id="@+id/View05"
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:layout_weight="0" />
+            <Button
+                android:id="@+id/restartbutton_1"
+                style="@android:style/Widget.ImageWell"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:text="@string/restartbutton"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/square_error"
+                android:textColorHint="@color/holo_grey" />
         </LinearLayout>
 
         <View
@@ -128,12 +152,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2.4" >
+                android:layout_weight="2.4">
 
                 <ImageButton
                     android:id="@+id/rotateLeftButton"
@@ -170,17 +194,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="0.1" />
-
             <ImageButton
-                android:id="@+id/softDropButton"
+                android:id="@+id/hardDropButton"
                 style="@android:style/Widget.ImageWell"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:contentDescription="soft Drop Button"
+                android:contentDescription="Hard Drop Button"
                 android:scaleType="centerInside"
-                android:src="@drawable/soft_drop_button_icon_noburn" />
+                android:src="@drawable/hard_drop_button_icon_noburn" />
+
 
         </LinearLayout>
 

@@ -138,7 +138,6 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/square_error"
                 android:textColorHint="@color/holo_grey" />
-
         </LinearLayout>
 
         <View
